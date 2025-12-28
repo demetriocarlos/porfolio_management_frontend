@@ -6,22 +6,6 @@ import { useState } from 'react';
  import { UserAvatar } from './UserAvatar';
   
  import { Plus } from 'lucide-react';
-
-const mockUser = {
-  name: "Ana Torres",
-  email: "ana@example.com",
-  avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  bio: "Desarrolladora Full Stack apasionada por crear experiencias digitales increíbles. Especializada en React, Node.js y diseño UX/UI.",
-  position: "Senior Frontend Developer",
-  company: "TechCorp",
-  location: "Madrid, España",
-  website: "https://anatorres.dev",
-  github: "anatorres",
-  linkedin: "ana-torres-dev",
-  isLoggedIn: true,
-  notifications: 3,
-  joinDate: "Enero 2020",
-}
  
 
  
@@ -113,23 +97,16 @@ const mockProjects = [
   },
 ]
  
-export const Porfolio = ({projects, user, imgUrl,handleSubmitContact, handleChange, email}) => {
+export const Porfolio = ({projects, user, imgUrl,handleSubmitContact, handleChange, email, stats}) => {
   
   const [showContact, setShowContact] = useState(false)
   
-   
- const totalStars = mockProjects.reduce((sum, project) => sum + project.stars, 0)
-  const totalViews = mockProjects.reduce((sum, project) => sum + project.views, 0)
-  const technologies = Array.from(new Set(mockProjects.flatMap((p) => p.technologies)))
 
   const handleContact = () => {
     setShowContact(!showContact)
   }
 
-
-  console.log('user', user)
  
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100  pt-1 "> 
       {/* Hero Section */}
@@ -178,12 +155,17 @@ export const Porfolio = ({projects, user, imgUrl,handleSubmitContact, handleChan
                       <div className='flex items-center gap-2'>
                         <MapPin className="h-4 w-4" />
                         <span>
-                          {mockUser.location}
+                          { user && user.location}
                         </span>
                       </div>
                       <div className='flex items-center gap-2'>
                         <Calendar className="h-4 w-4" />
-                        <span>Desde {mockUser.joinDate}</span>
+                        <span>Desde {new Date(user && user.createdAt).toLocaleDateString("es-ES", {
+                            year: "numeric",
+                            month: "short",
+                          day: "numeric",
+                          })}
+                        </span>
                       </div>
                     </div>
 
@@ -194,15 +176,15 @@ export const Porfolio = ({projects, user, imgUrl,handleSubmitContact, handleChan
                     {/* Tecnologías */}
 
                     <div className='flex flex-wrap gap-4 mb-4  '>
-                      {technologies.slice(0,6).map((tech) => (
-                        <div key={tech} className='text-xs bg-gray-100 border border-gray-300   p-1 rounded-lg font-semibold'>
+                      { user && user.technologies.map((tech, index) => (
+                        <div key={index} className='text-xs bg-gray-100 border border-gray-300   p-1 rounded-lg font-semibold'>
                             {tech}
                         </div>
                       ))}
 
-                      {technologies.length > 6 && (
+                      {user && user.technologies.length > 6 && (
                         <div className='text-xs'>
-                          +{technologies.length - 6} mas
+                          +{user && user.technologies.length - 6} mas
                         </div>
                       )}
                       
@@ -217,14 +199,6 @@ export const Porfolio = ({projects, user, imgUrl,handleSubmitContact, handleChan
                     >
                       <Mail className="h-4 w-4 mr-2" />
                       Contactar
-                    </button>
-                    <button className='flex items-center py-1 px-2 rounded-lg border  hover:bg-gray-100'>
-                      <Share2 className="h-4 w-4 mr-2" />
-                      Compartir
-                    </button>
-                    <button className='flex items-center py-1 px-3 rounded-lg border hover:bg-gray-100'>
-                      <Download className="h-4 w-4 mr-2" />
-                      Descargar CV
                     </button>
                   </div>
                 </div>
@@ -241,20 +215,13 @@ export const Porfolio = ({projects, user, imgUrl,handleSubmitContact, handleChan
                   </div>
                   <div>
                     <div className='text-2xl font-bold text-[#7676d7]'>
-                        {totalStars}
+                        {stats?.totalFavorites || 0}
                     </div>
                     <div className="text-sm text-gray-600">
                       Estrellas
                     </div>
                   </div>
-                  <div>
-                    <div className='text-2xl font-bold text-[#7676d7]'>
-                       {(totalViews / 1000).toFixed(1)}k
-                    </div>
-                    <div className="text-sm text-gray-600">
-                      Vistas
-                    </div>
-                  </div>
+                   
                 </div>
               </div>
 

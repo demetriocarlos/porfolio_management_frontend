@@ -1,6 +1,6 @@
 
  import { Porfolio } from "./Styles/Porfolio"
- import { useGetProfileId } from "../hooks/useUsers"
+ import { useGetProfileId, useUserStats } from "../hooks/useUsers"
  import { useGetProjectId } from "../hooks/useProject"
  import { useParams } from "react-router-dom"
  import { useAuth } from "../hooks/useAuth"
@@ -17,6 +17,7 @@ export const PorfolioSettings = () => {
   
   const {data:user} = useGetProfileId(userIdentifier)
   const {data:projects} = useGetProjectId(userIdentifier)
+  const {data:stats} = useUserStats(userIdentifier)
    const  contactEmailMutation = useContactEmail()
   const [ email, setEmail] = useState("")
 
@@ -51,6 +52,7 @@ export const PorfolioSettings = () => {
           handleChange={handleChange}
           handleSubmitContact={handleSubmitContact}
           email={email}
+          stats={stats}
         />
     </div>
   )

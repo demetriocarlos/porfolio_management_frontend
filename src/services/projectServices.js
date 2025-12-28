@@ -77,7 +77,19 @@ const projectsSearch = async (query)  => {
         console.error("Error al realizar la busqueda del los projectos", error)
     }
 }
-     
+
+
+
+const updatedFavorites= async (id) =>{
+        try{
+            const response = await api.put(`/projects/${id}/favorites`)
+            return response.data;
+        }catch(error){
+            console.error("Error al agregar a favoritos", error)
+        }
+}
+
+ 
  export default {
     createProject,
     editProject,
@@ -85,5 +97,7 @@ const projectsSearch = async (query)  => {
     getUserProject,
     getProjects,
     getProjectsId,
-    projectsSearch
+    projectsSearch,
+    updatedFavorites,
+     
 }

@@ -253,21 +253,6 @@ export const Navbar = () => {
                 ))}
 
                 <hr className="mt-3 mb-2 border-2" /> 
-
-                <div className="p-1 hover:bg-gray-100 rounded-lg px-2 flex items-center gap-2  transition duration-300 ease-in-out focus:outline-none focus:ring-2">
-                  <Heart className="h-4 w-4" />
-                  Favoritos
-                </div>
-                <div className="p-1 hover:bg-gray-100 rounded-lg px-2 flex items-center gap-2 transition duration-300 ease-in-out focus:outline-none focus:ring-2">
-                  <Bookmark className="h-4 w-4" />
-                  Guardados
-                </div>
-
-                <div className="p-1 hover:bg-gray-100 rounded-lg px-2 flex items-center gap-2 transition duration-300 ease-in-out focus:outline-none focus:ring-2">
-                  <Settings className="h-4 w-4" />
-                  Configuración
-                </div>
-                <hr className="mt-3 mb-2 border-2" />
                  {/**boton para cerrar sesion */}
                 <LogoutButton />
               </div>

@@ -49,6 +49,17 @@ const getUserSearch = async (query) => {
     }
 }
 
+ 
+const getUserStats = async (userId) => {
+    try {
+        const response = await api.get(`/${userId}/stats`);
+        return response.data;
+    } catch (error) {   
+        console.error("Error al obtener estadísticas", error);
+        throw error;
+    }
+};
+
 const  editUser = async (id,editProfile) => {
     try{
           
@@ -96,5 +107,6 @@ const deleteImgProfile = async (id) => {
     editUser,
     editImgProfile,
     deleteImgProfile,
-    getUserSearch
+    getUserSearch, 
+    getUserStats
 }

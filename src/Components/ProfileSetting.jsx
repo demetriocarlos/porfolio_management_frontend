@@ -33,12 +33,19 @@ import { useState, useEffect } from "react"
       if (user && user[0]) {
         setFormData({
           userName: user[0].userName || "",
-          email: user[0].email || "",
+          email: user[0].email || "",   
           jobTitle: user[0].jobTitle || "",
           biography: user[0].biography || "",
           profilePicture:user[0].profilePicture || "",
-          technologies:user[0].technologies || "",
-          location:user[0].location || "",
+
+          technologies: Array.isArray(user[0].technologies)
+            ? user[0].technologies.join(", ")
+            : user[0].technologies || "",
+          /*location:Array.isArray(user[0].location)
+            ? user[0].location.join(", ")
+            :user[0].location || ""  ,*/
+            location:user[0].location || "",
+
           id:user[0].id || ""
 
         });

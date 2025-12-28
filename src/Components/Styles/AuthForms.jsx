@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { Github } from "lucide-react"
 
 
-export const AuthFormsStyles = ({handleChange,handleSubmit,handleGithubLogin, credentials, login, texto, descriptionLink, namelink}) => {
+export const AuthFormsStyles = ({handleChange,handleSubmit,handleGithubLogin, credentials, login, texto, descriptionLink, namelink, error}) => {
     return (
         <div className="main-h-screen flex items-center justify-center bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200   p-6">
             <div className="w-full max-w-md bg-white/20 backdrop-blur-md border border-white/30 rounded-lg shadow-xl  text-black p-10">
@@ -13,8 +13,6 @@ export const AuthFormsStyles = ({handleChange,handleSubmit,handleGithubLogin, cr
                         <p className="text-3xl  text-[#5a5ac4] ">{'</>'}</p>
                         <h2 className="text-3xl font-bold text-gray-700">DevLog</h2>
                     </div>
-                     
-                    
                     <p className="text-gray-800  mt-2 text-gray-600">{texto}</p>
                 </div>
 
@@ -88,6 +86,11 @@ export const AuthFormsStyles = ({handleChange,handleSubmit,handleGithubLogin, cr
                          </Link>
                     </div>
 
+                    {error && (
+                        <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+                            ⚠️ {error}
+                        </div>
+                    )}  
                     
                     <div>
                         <button

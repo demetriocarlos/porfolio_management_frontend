@@ -129,3 +129,12 @@ export const useGetUserSearch = (query)  => {
 }
 
 
+// hooks/useUserStats.js
+export const useUserStats = (userId) => {   
+    return useQuery({
+        queryKey: ['userStats', userId],
+        queryFn: () => userServices.getUserStats(userId),
+        enabled: !!userId, // Solo ejecutar si hay userId
+    });
+};
+

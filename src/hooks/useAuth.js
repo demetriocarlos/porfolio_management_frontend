@@ -9,7 +9,7 @@ export const useAuth = () => {
     return useContext(AuthContext)
 }   
 
-
+          
 
 export const useLogin = () => {
     const {login:loginContext}= useAuth();// Obtener la función de login del contexto

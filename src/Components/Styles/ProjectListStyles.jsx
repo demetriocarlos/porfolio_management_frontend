@@ -1,15 +1,17 @@
  import { FaRegCalendarAlt, FaExternalLinkAlt, FaGithub } from "react-icons/fa";
-import { Search } from "lucide-react";
+import { Search, Star, Eye } from "lucide-react";
 import { UserRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { NoResults } from "./NoResults";
 import { Spinner } from "./Spinner";
 import { UserAvatar } from "./UserAvatar";
+import { useAuth } from "../../hooks/useAuth";
+ 
 
-export const ProjectListStyles = ({projects, projectList,  handleChange,  projectResult }) => {
+export const ProjectListStyles = ({projects, projectList,  handleChange,  projectResult, updatedFavoriteProject}) => {
     
-  
+  const {state} = useAuth()
      
 
   return (
@@ -69,10 +71,47 @@ export const ProjectListStyles = ({projects, projectList,  handleChange,  projec
                         </header>
                         <section className="pb-4 mt-3">
                           <p className="mb-4 text-gray-600 line-clamp-2">{project.description}</p> 
+
+
+                          {/* Tecnologías */}
+                          <div className="flex flex-wrap gap-1 mb-2">
+                            {project.technologies.map((tech) => (
+                              <div
+                                key={tech}
+                                variant="outline"
+                                className="text-sm font-semibold border border-[#8b87db] text-[#7676d7]  px-3    rounded-lg"
+                              >
+                                {tech}
+                              </div>
+                            ))}
+                          </div>
+
+
+
+                          {/* Estadísticas */}
+                          <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                            <div className="flex items-center gap-1">
+                              <button 
+                                onClick={(e) => { 
+                                  e.stopPropagation(); //  Evita propagación si está dentro de otro clickable
+                                  updatedFavoriteProject.mutate({id:project.id,favorites:state.id  })} 
+                                }
+                                className={`mb-2  text-3xl ${project.favorites.includes(state.id) 
+                                  ? " text-yellow-400" 
+                                  : " text-[#7676d7]"
+                                }`}
+                                >
+                                  {project.favorites.includes(state.id) ? " ✯" : "☆ "}
+                              </button>
+                              <span >{project.favorites.length}</span>
+                            </div>
+                          </div>
+
+
                             {/* Enlaces */}
                           <div className="flex gap-4 mb-4">  
                             {/** bg-gray-800,,, [#7676d7] */}
-                            <button className="flex-1 bg-gray-800 py-1 hover:opacity-90  rounded-md">
+                            <button  className="flex-1 bg-gray-800 py-1 hover:opacity-90  rounded-md">
                               <a 
                                 href={project.demoUrl} 
                                 target="_blank"

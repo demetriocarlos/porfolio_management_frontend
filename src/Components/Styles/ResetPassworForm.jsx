@@ -1,7 +1,7 @@
 
 
 
-export const ResetPassworForm = ({onlyEmail, textButton, subTitle, handleChange,email, handleSubmit, credentials, loading}) => {
+export const ResetPassworForm = ({onlyEmail, textButton, subTitle, handleChange,email, handleSubmit, credentials, loading, error}) => {
      
   return (
      <div className="main-h-screen  flex items-center justify-center h-screen  bg-gradient-to-br from-gray-200 via-gray-100 to-gray-200 p-6"> 
@@ -71,6 +71,10 @@ export const ResetPassworForm = ({onlyEmail, textButton, subTitle, handleChange,
                 required
                 />
             </div>
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+              ⚠️ {error}
+            </div>
+      
             </>
             )}
 

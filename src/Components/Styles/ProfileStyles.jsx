@@ -33,45 +33,49 @@ export const ProfileStyles = ({setFormData,  formData , editUserMutation, editIm
       return
      }
 
-     console.log('formData', formData)
+      
     if (!user || !user[0]) return;
-
-  const originalData = user[0];
  
-  // Filtrar campos vacíos o sin cambios
-  const changes = Object.keys(formData).reduce((acc, key) => {
-    const newValue = formData[key]?.toString().trim()
-    const oldValue = originalData[key]?.toString().trim()
-    
-    // Solo incluir si: existe, no está vacío y es diferente
-    if (newValue && newValue !== oldValue) {
-      acc[key] = newValue
+  const original = user[0];
+  const changes = {};
+
+
+  // Detectar cambios en campos simples
+  ["userName", "email", "jobTitle", "biography", "location"].forEach(key => {
+    const newValue = formData[key].trim();
+    const oldValue = (original[key] || "").trim();
+
+    if ( newValue !== oldValue && newValue !== ""){
+      changes[key] = newValue
     }
-    return acc
-  }, {})
+  });
 
- 
+
+  // Detectar cambios en technologies
+  const techString = formData.technologies.trim();
+  const oldTechString= Array.isArray(original.technologies)
+    ? original.technologies.join(", ")
+    : original.technologies || "";
+
+  if(techString !== oldTechString) {
+    changes.technologies = techString
+      .split(",")
+      .map(t => t.trim())
+      .filter(Boolean); // evita strings vacíos
+  }
+
+
     // Verificar si hay cambios
   if (Object.keys(changes).length === 0) {
      
      setMensaje('No hay cambios válidos para guardar')
-    return
+    return;
   }
-  
-    
+   
      editUserMutation.mutate({
       id:user && user[0].id,
       //...editProfile
-      ...changes,
-      technologies:  formData.technologies
-      .split(",")
-      .map(tech => tech.trim()) // elimina espacios extra
-      .filter(Boolean), // elimina elementos vacíos
-
-      location:  formData.location
-        .split(",")
-        .map(tech => tech.trim()) // elimina espacios extra
-        .filter(Boolean)
+      ...changes, 
      })
   }
  
@@ -137,9 +141,9 @@ export const ProfileStyles = ({setFormData,  formData , editUserMutation, editIm
       }   
      
   };
-
-  console.log("user", user)
  
+  
+  
   return (
      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100  p-4 md:p-8 "> 
 
