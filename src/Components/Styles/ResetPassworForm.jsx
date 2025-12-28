@@ -71,9 +71,16 @@ export const ResetPassworForm = ({onlyEmail, textButton, subTitle, handleChange,
                 required
                 />
             </div>
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+            {
+              error ? (
+                <div className="mt-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg">
               ⚠️ {error}
             </div>
+              ) : (
+                ""
+              )
+            }
+            
       
             </>
             )}
