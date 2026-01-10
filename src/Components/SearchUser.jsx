@@ -41,6 +41,7 @@ export const SearchUser = () => {
                   user={user}
                   className={"w-20 h-20"}
                 />
+                <p className="font-semibold text-lg">{user.userName}</p>
             </div>
             </Link>
             </div>
